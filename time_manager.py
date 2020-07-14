@@ -46,8 +46,8 @@ tzset()
 
 # setting 'events'
 spotlight_hour = int(datetime(2020, 7, 14, 18, 0).timestamp())
-baloon_time = int(datetime(2020, 7, 13, 18, 0).timestamp())
-baloon_time_limeted = int(datetime(2020, 7, 13, 15, 0).timestamp())
+baloon_time = int(datetime(2020, 7, 14, 18, 0).timestamp())
+baloon_time_limeted = int(datetime(2020, 7, 14, 15, 0).timestamp())
 end = int(datetime(2020, 7, 15, 21, 0).timestamp())
 
 # add 'events'
@@ -75,21 +75,29 @@ while True:
     min_time = e[1]
 
     # заснути на n секунд
-    sl = min_time - int(datetime.now().timestamp())
-    print("\nsleep: " + str(sl))
-    print("next message: {}".format(e[2]), end=" ", flush=True)
+    current_time = int(datetime.now().timestamp())
+    sl = 0
+    if (min_time > current_time):
+        sl = min_time - current_time
+    else:
+        raise ValueError(
+            "\nSleep time should be positive integer. I got {}".format(sl)
+            )
 
+    print("next message: {}".format(e[2]), end=" ", flush=True)
+    print("\nsleep: " + str(sl))
     sleep(sl)
 
     # отримати тепершній час
-    now = int(datetime.now().timestamp())
+    t1 = datetime.now()
+    now = int(t1.timestamp()) - t1.second
 
     data = {'update_id': 0, 'message': e[2], }
     requests.post(config.outer_url, json=data)
     print("   OK\n")
 
     # delete old 'events' or update to new datetime
-    if e[4] <= now:
+    if (e[4] <= now) and (e[4] != 0):
         event.delete(e[0])
         continue
 
