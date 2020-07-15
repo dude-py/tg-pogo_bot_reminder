@@ -4,7 +4,6 @@ import config
 
 db_name = config.db_name
 table = config.table_name
-schema = config.database_schema
 
 
 def execute(query):
@@ -23,21 +22,24 @@ def execute(query):
         return result
 
 
-def create(*values):
+def create(table, schema, *values):
     """ add new event to database """
-    if(len(values) != 4):
-        raise ValueError("wrong arguments. should be time in seconds, \
-        message and bool")
+    # if(len(values) != 4):
+    #     raise ValueError("can't create new event. wrong arguments")
 
     # for database
-    sql_query = "INSERT INTO {} {} VALUES {}".format(table, schema[1:], values)
+    sql_query = "INSERT INTO {} {} VALUES {}".format(table, schema, values)
     sql_query = sql_query.replace('[', '(').replace(']', ')')
     execute(sql_query)
 
 
-def read():
+def read(table, cols='*', event_id=None):
     """ read all data from db """
-    sql_query = "SELECT * FROM %s" % table
+    sql_query = "SELECT %s FROM %s" % (cols, table)
+
+    if event_id is not None:
+        sql_query += " WHERE event_id='{}'".format(event_id)
+
     result = execute(sql_query)
     return result
 
@@ -47,7 +49,7 @@ def update(id, key, value):
     if(type(value) is str):
         value = '"' + value + '"'
 
-    if(key in schema):
+    if(key in config.schema):
         sql_query = "UPDATE {} SET {} = {} WHERE id = {}"\
                 .format(table, key, value, id)
         execute(sql_query)
