@@ -51,13 +51,13 @@ def new_event(event_time, event_id, repeat, event_end=0, mesgs=[]):
 if(__name__ == "__main__"):
     # setting 'events'
     spotlight_hour = int(datetime(2020, 7, 21, 18, 0).timestamp())
-    raid_hour = int(datetime(2020, 7, 15, 18, 0).timestamp())
-    baloon_time = int(datetime(2020, 7, 15, 18, 0).timestamp())
-    baloon_time_limeted = int(datetime(2020, 7, 15, 15, 0).timestamp())
-    end = int(datetime(2020, 7, 15, 21, 0).timestamp())
+    raid_hour = int(datetime(2020, 7, 22, 18, 0).timestamp())
+    baloon_time = int(datetime(2020, 7, 16, 6, 0).timestamp())
+    go_fest = int(datetime(2020, 7, 17, 8, 0).timestamp())
+    cd_start = int(datetime(2020, 7, 19, 11, 0).timestamp())
 
     # add 'events'
-    msg = ["Spotlight hour starts now!"]
+    msg = ["Spotlight hour start now! В центрі увагі Одіш та 2х пилі за ловлю"]
     new_event(
         spotlight_hour,
         "spotlight_hour",
@@ -65,7 +65,7 @@ if(__name__ == "__main__"):
         mesgs=msg,
     )
 
-    msg = ["Raid hour starts now!"]
+    msg = ["Година рейдів почалася! Кайрем вже на всіх джимах!"]
     new_event(
         raid_hour,
         "raid_hour",
@@ -73,16 +73,42 @@ if(__name__ == "__main__"):
         mesgs=msg
     )
 
-    msg = ["baloon1", "baloon2", "baloon3"]
+    go_fest_msg = ["Новий покемон, Петіліл, почав з`являтися в Pokemon GO,\
+ а також можна знайти шайні Белспраут та Пікачу в літній шапці -- це почалася\
+ 'GO Fest Weekly Challenge: Friendship'. P.S. Не забудьте сфотографувати свого\
+ улюбленого покемона ;)"]
+    new_event(
+        go_fest,
+        'go_fest',
+        0,
+        mesgs=go_fest_msg
+    )
+
+    msg = ["День спільноти з Гастлі почався! Від тепер і до 17:00 інкубатори \
+будуть на 1/4 ефективніші, інсенс працюватиме 3 години, а Генгар зможе вивчити\
+ атаку 'Shadow punch'. Приємного полювання за привидами."]
+    new_event(
+        cd_start,
+        'community_day',
+        0,
+        mesgs=msg,
+    )
+
+    msg = [
+        "Повітряна куля команди Р знову на піксельному небі",
+        "Це птах? Це літак? Ні, це су... це повітряна куля команди Р)",
+        "Там воздушный шар команды Р. Попробуй ещё разок, а то сидишь без\
+ шайни, шадоу кофинга/еканса как лох",
+        "Команда R опять хочет в тартарары",
+        "Команда Пакетов на воздушном мяуткабриолете желает улететь\
+ в красивом пируэте",
+        "Эув слушь, кожаные мешки!? Там виртуальная реальность\
+ бросает вам вызов",
+        "Команда Р знову на горизонті та хоче викрасти ваших покемонів",
+    ]
     new_event(
         baloon_time,
         "baloon",
         hour * 6,
         mesgs=msg,
-    )
-    new_event(
-        baloon_time_limeted,
-        "baloon",
-        hour * 6,
-        event_end=end,
     )
