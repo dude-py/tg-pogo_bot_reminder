@@ -1,13 +1,14 @@
 import config
 import event
 import random
+import time
+# from time import tzset, time
 from datetime import datetime
-from time import tzset
 from os import environ
 
 # setting time zone
 environ['TZ'] = 'Europe/Kiev'
-tzset()
+time.tzset()
 
 hour = 3600
 week = 604800
@@ -28,7 +29,7 @@ def new_event(event_time, event_id, repeat, event_end=0, mesgs=[]):
     """
     if(type(event_time) != int):
         raise TypeError("type err: event_time should be integer")
-    if(event_time < int(datetime.now().timestamp())):
+    if(event_time < int(time.time())):
         raise Exception("it's no make sense. Time should be in the future")
     if(type(event_id) != str):
         raise TypeError("type err: msg shoud be a string")

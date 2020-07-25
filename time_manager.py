@@ -4,8 +4,7 @@ import event
 import config
 import requests
 import event_manager
-from time import sleep, tzset
-from datetime import datetime
+from time import sleep, tzset, time
 from os import environ
 
 
@@ -19,14 +18,10 @@ def next_event(lst):
 
 
 def get_sleep_time():
-    current_time = int(datetime.now().timestamp())
-    sl = 0
-    if (min_time >= current_time):
-        sl = min_time - current_time
-    else:
-        raise ValueError(
-            "\nSleep time should be positive integer. I got {}".format(sl)
-            )
+    current_time = int(time())
+    sl = min_time - current_time
+    if (sl < 0):
+        raise ValueError(f"Sleep time should be positive integer. I got {sl}")
     return sl
 ###############################################################################
 
@@ -50,8 +45,8 @@ while True:
     sleep(sl)
 
     # отримати тепершній час
-    t1 = datetime.now()
-    now = int(t1.timestamp()) - t1.second
+    t1 = int(time())
+    now = t1 - (t1 % 60)
 
     data = {'update_id': 0, 'message': mesg, }
     requests.post(config.outer_url, json=data)
