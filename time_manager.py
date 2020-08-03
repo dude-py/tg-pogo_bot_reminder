@@ -17,8 +17,7 @@ def next_event(lst):
     return tmp
 
 
-def get_sleep_time():
-    current_time = int(time())
+def get_sleep_time(current_time, min_time):
     sl = min_time - current_time
     if (sl < 0):
         raise ValueError(f"Sleep time should be positive integer. I got {sl}")
@@ -34,10 +33,11 @@ tzset()
 while True:
     events = event.read(config.table_name)
     e = next_event(events)
+    current_time = int(time())
     min_time = e[1]
 
     # заснути на n секунд
-    sl = get_sleep_time()
+    sl = get_sleep_time(current_time, min_time)
     mesg = event_manager.get_mesg(e[2])
 
     print("\nsleep: " + str(sl))
@@ -45,8 +45,7 @@ while True:
     sleep(sl)
 
     # отримати тепершній час
-    t1 = int(time())
-    now = t1 - (t1 % 60)
+    now = current_time - (current_time % 60)
 
     data = {'update_id': 0, 'message': mesg, }
     requests.post(config.outer_url, json=data)
