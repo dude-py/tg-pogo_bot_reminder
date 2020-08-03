@@ -51,10 +51,10 @@ if(__name__ == "__main__"):
     # setting 'events'
     spotlight_hour = int(datetime(2020, 8, 4, 18, 0).timestamp())
     raid_hour = int(datetime(2020, 8, 5, 18, 0).timestamp())
-    baloon_time = int(datetime(2020, 8, 3, 15, 0).timestamp())
+    baloon_time = int(datetime(2020, 8, 3, 18, 0).timestamp())
 
     # add 'events'
-    msg = ["Spotlight hour start now! В центрі увагі Одіш та 2х пилі за ловлю"]
+    msg = ["Spotlight hour start now! В центрі увагі Горсі та 2х кангфет за ловлю"]
     new_event(
         spotlight_hour,
         "spotlight_hour",
